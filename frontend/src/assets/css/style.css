@@ -1,0 +1,1110 @@
+/* ==========================================================================
+   DISHCOVERY HOMEPAGE STYLES
+
+   HOW TO EDIT
+   - Everything you will probably want to change is in the SETTINGS block
+     right below. All sizes are in px.
+   - Each setting has a tag like [A], [B], [C]... Search for the tag
+     (Ctrl+F) to see where it is used further down in this file.
+   - The sizes in SETTINGS apply on screens wider than 1000px (laptops and
+     desktops). Smaller screens use the automatic sizes in the block called
+     "SMALL SCREENS" near the bottom of this file.
+   ========================================================================== */
+
+:root {
+
+  /* ======================================================================
+     FONTS
+     ====================================================================== */
+  --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "Courier New", monospace;
+  --font-script: "Arizonia", cursive;
+  --font-hand: "Reenie Beanie", "Bradley Hand", cursive;
+
+  /* [A] Font of the big hero title ("Dishcovery").
+         Put the font you chose here, for example: "Pinyon Script", cursive */
+  --font-hero: var(--font-script);
+
+  /* ======================================================================
+     SETTINGS (px)
+     ====================================================================== */
+
+  /* [B] HEADER (Menu button + logo at the very top) */
+  --header-padding-x: 64px;      /* space on the left and right of the header */
+  --header-padding-y: 20px;      /* space above and below the header */
+  --header-menu-size: 11.5px;    /* font size of the word "Menu" */
+  --logo-height: 50px;           /* height of your logo image */
+  --logo-text-size: 24px;        /* only used if the logo image is missing */
+
+  /* [C] HERO (big title screen) */
+  --hero-title-size: 200px;      /* font size of "Dishcovery" */
+  --hero-title-stroke: 0.6px;    /* outline that thickens thin script fonts (0 = off) */
+  --hero-tagline-size: 11.5px;   /* font size of "A story of proportion..." */
+  --hero-tagline-gap: 24px;      /* space between the title and the tagline */
+  --button-size: 11px;           /* font size inside the round buttons */
+  --button-padding: 11px 26px;   /* button padding: top/bottom  left/right */
+
+  /* [D] SIDE PADDING OF THE PAGE SECTIONS (Featured, Cuisines, Footer)
+         This is the space between the screen edge and the content.
+         Bugatti uses about 48px on a laptop screen. Make it smaller to
+         push the content closer to the edges. */
+  --section-padding-x: 48px;     /* left and right space */
+  --section-padding-y: 96px;     /* space above and below each section */
+  --section-max-width: 1800px;   /* content never gets wider than this */
+
+  /* [E] SECTION TITLES ("Featured Restaurants", "Our Cuisines") */
+  --section-title-size: 43px;
+  --section-title-gap: 32px;     /* space between title and the cards */
+
+  /* [F] FEATURED RESTAURANT CARDS */
+  --featured-gap: 22px;          /* space between the three cards */
+  --featured-image-ratio: 16 / 10; /* shape of the image: width / height */
+  --featured-name-size: 24px;    /* font size of the restaurant name */
+
+  /* [G] SHOWCASE (full-screen video, "Solitaire") */
+  --showcase-title-size: 160px;
+
+  /* [H] CUISINES (glass panel) */
+  --cuisine-panel-max-width: 1000px; /* width of the glass panel */
+  --cuisine-panel-padding: 32px;     /* space between glass edge and cards */
+  --cuisine-gap: 16px;               /* space between the cards */
+  --cuisine-name-size: 58px;         /* "Italian Cuisine" font size */
+  --cuisine-caption-size: 9px;       /* small text on top of each card */
+  --glass-blur: 24px;                /* higher = frostier glass */
+  --cuisine-vignette: .5;            /* dark shading on the cards so the name stands out (0 = none, 1 = strong) */
+
+  /* [I] QUOTE (one line) */
+  --quote-size: 90px;            /* font size of the handwritten quote */
+
+  /* [J] FOOTER */
+  --footer-padding-x: 48px;      /* left and right space of the footer */
+  --footer-link-size: 16px;      /* font size of the footer links */
+  --footer-logo-height: 110px;   /* height of the logo in the footer */
+  --social-icon-size: 20px;      /* size of the social media icons */
+  --mark-base-color: #141414;    /* big footer word at rest: same as the footer background, so it is invisible */
+  --mark-lit-color: #323232;     /* big footer word where the cursor is (higher = brighter glow) */
+  --mark-light-radius: 420px;    /* size of the light around the cursor (bigger = it reaches the letters from farther away) */
+
+  /* [K] VIDEO ZOOM
+         Zooms the video in from the center so black bars that are part of
+         the video file get cropped out. 1 = no zoom, 1.15 = 15% bigger.
+         The position can be changed to move the zoomed video, for example:
+         center, top, bottom, left, right, or "50% 30%". */
+  --hero-video-zoom: 1.15;
+  --hero-video-position: center;
+  --showcase-video-zoom: 1.15;
+  --showcase-video-position: center;
+  /* Hover videos on the cuisine cards: one zoom per cuisine. Raise the number
+         until the black bars are gone. */
+  --zoom-italian: 1.2;
+  --zoom-japanese: 1.5;
+  --zoom-mexican: 1.5;
+  --zoom-indian: 1.2;
+  --zoom-chinese: 1.2;
+  --zoom-thai: 1.2;
+
+  /* [L] POP-UP (opens when you click "Learn more" on a cuisine card) */
+  --modal-max-width: 560px;      /* width of the pop-up */
+  --modal-title-size: 56px;      /* cuisine name */
+  --modal-text-size: 16px;       /* history and about text */
+  --modal-blur: 14px;            /* how much the page behind gets blurred */
+  --sample-image-ratio: 4 / 5;   /* shape of the sample dish images: width / height */
+  --sample-name-size: 15px;      /* dish name on top of each sample image */
+
+  /* ====================================================================== */
+
+  /* Colors */
+  --black: #000;
+  --charcoal: #141414;
+  --panel: #0e0e0e;
+  --line: #262626;
+  --white: #fff;
+  --muted: #a3a3a3;
+}
+
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+
+:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+
+/* The menu/filter checkboxes are focused when their labels are clicked. If they sit at the
+   top of the document, the browser scrolls up to them (page jumps to the hero). Pin them
+   to the viewport so focusing them never scrolls the page. */
+.menu-toggle.visually-hidden,
+.filter-toggle.visually-hidden { position: fixed !important; top: 0; left: 0; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   MEDIA SLOTS (images + videos)
+   Each slot shows a soft color until your own file loads on top of it.
+   Images live in the img folder, videos in the video folder.
+   ========================================================================== */
+.media {
+  --h: 215;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 70% 25%, hsl(var(--h) 45% 30% / .55), transparent 70%),
+    linear-gradient(165deg, hsl(var(--h) 28% 20%), hsl(var(--h) 30% 7%));
+}
+
+.media img,
+.media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* [K] Video zoom (values are set in SETTINGS at the top) */
+.hero > .media video {
+  transform: scale(var(--hero-video-zoom));
+  object-position: var(--hero-video-position);
+}
+
+.showcase > .media video {
+  transform: scale(var(--showcase-video-zoom));
+  object-position: var(--showcase-video-position);
+}
+
+.cuisine__video { transform: scale(var(--zoom, 1)); }
+#card-italian  { --zoom: var(--zoom-italian); }
+#card-japanese { --zoom: var(--zoom-japanese); }
+#card-mexican  { --zoom: var(--zoom-mexican); }
+#card-indian   { --zoom: var(--zoom-indian); }
+#card-chinese  { --zoom: var(--zoom-chinese); }
+#card-thai     { --zoom: var(--zoom-thai); }
+
+/* ==========================================================================
+   [B] TOP BAR
+   ========================================================================== */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: var(--header-padding-y) var(--header-padding-x);
+}
+
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -24px 0;
+  background: linear-gradient(rgb(0 0 0 / .6), transparent);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.menu-btn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--header-menu-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.menu-icon {
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 5px 0 currentColor;
+  margin-bottom: 5px;
+}
+
+/* Logo: shows img/logo.png. If that file is missing, the brand name shows instead. */
+.logo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--logo-text-size);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.logo img { display: block; height: var(--logo-height); width: auto; }
+
+.menu-toggle:focus-visible ~ .topbar .menu-btn {
+  outline: 2px solid var(--white);
+  outline-offset: 6px;
+}
+
+/* ==========================================================================
+   MENU PANEL (checkbox toggle, no JavaScript)
+   ========================================================================== */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgb(0 0 0 / .55);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s ease, visibility .4s ease;
+  cursor: pointer;
+}
+
+.menu {
+  position: fixed;
+  z-index: 70;
+  top: 16px;
+  left: 16px;
+  width: min(820px, calc(100% - 32px));
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 32px;
+  padding: 36px;
+  background: #fff;
+  color: #111;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity .4s ease, transform .4s ease, visibility .4s ease;
+}
+
+.menu-toggle:checked ~ .scrim { opacity: 1; visibility: visible; }
+.menu-toggle:checked ~ .menu  { opacity: 1; visibility: visible; transform: none; }
+
+.menu__close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 29px;
+  line-height: 1;
+  color: #555;
+  cursor: pointer;
+}
+
+.menu__list { align-self: center; display: grid; gap: 6px; }
+
+.menu__list a {
+  display: inline-block;
+  padding: 6px 0;
+  font-size: 27px;
+  font-weight: 500;
+  color: #111;
+  transition: color .25s ease, transform .25s ease;
+}
+
+.menu__list a:hover { color: #777; transform: translateX(6px); }
+
+.menu__cards { display: grid; gap: 14px; }
+
+.menu__card {
+  position: relative;
+  min-height: 130px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.menu__card .media { position: absolute; inset: 0; }
+
+.menu__card-title {
+  position: absolute;
+  left: 14px;
+  bottom: 11px;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 8px rgb(0 0 0 / .6);
+}
+
+/* Domino fade-in: each item waits a little longer than the one before it.
+   The order is set with --i on each item in index.html. */
+.domino {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.menu-toggle:checked ~ .menu .domino {
+  opacity: 1;
+  transform: none;
+  transition: opacity .7s ease, transform .7s ease;
+  transition-delay: calc(.25s + var(--i) * .16s);
+}
+
+/* ==========================================================================
+   [C] HERO
+   ========================================================================== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero > .media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(45% 35% at 72% 62%, hsl(18 75% 32% / .6), transparent 70%),
+    radial-gradient(60% 45% at 25% 70%, hsl(12 70% 26% / .35), transparent 70%),
+    linear-gradient(180deg, #0c1119, #050608 85%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 38%;
+  background: linear-gradient(transparent, var(--black));
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero__content { padding: 0 var(--section-padding-x); margin-top: 32px; }
+
+.hero__title {
+  font-family: var(--font-hero);
+  font-weight: 400;
+  font-size: var(--hero-title-size);
+  line-height: .85;
+  -webkit-text-stroke: var(--hero-title-stroke) var(--white);
+}
+
+.hero__tagline {
+  margin-top: var(--hero-tagline-gap);
+  font-family: var(--font-mono);
+  font-size: var(--hero-tagline-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* ---------- Shared round button ---------- */
+.btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: var(--button-padding);
+  font-family: var(--font-mono);
+  font-size: var(--button-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border: 1px solid rgb(255 255 255 / .75);
+  border-radius: 999px;
+  transition: background .3s ease, color .3s ease;
+}
+
+.btn:hover { background: var(--white); color: var(--black); }
+
+/* ==========================================================================
+   [D] SHARED SECTION PIECES (side padding lives here)
+   ========================================================================== */
+.section {
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+/* [E] */
+.section__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--section-title-size);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  margin-bottom: var(--section-title-gap);
+}
+
+.learn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ==========================================================================
+   [F] FEATURED RESTAURANTS
+   ========================================================================== */
+.featured__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--featured-gap);
+}
+
+.featured__card { display: block; }
+
+.featured__card .media {
+  aspect-ratio: var(--featured-image-ratio);
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.featured__card .media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0);
+  transition: background .4s ease;
+}
+
+.featured__card:hover .media::after { background: rgb(0 0 0 / .25); }
+
+.featured__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--featured-name-size);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   [G] SHOWCASE (full-screen video section)
+   ========================================================================== */
+.showcase {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: clip;
+}
+
+.showcase > .media {
+  --h: 85;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.showcase::before,
+.showcase::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 28%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.showcase::before { top: 0;    background: linear-gradient(var(--black), transparent); }
+.showcase::after  { bottom: 0; background: linear-gradient(transparent, var(--black)); }
+
+.showcase__title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: var(--showcase-title-size);
+  line-height: .9;
+  -webkit-text-stroke: .5px var(--white);
+}
+
+/* ==========================================================================
+   [H] CUISINES (glass panel on a pure black background)
+   The glass look comes from the translucent fill, the bright top edge, the
+   soft shine across the panel and the shadow underneath.
+   ========================================================================== */
+.cuisines {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--black);
+}
+
+.cuisines__panel {
+  width: min(var(--cuisine-panel-max-width), 100%);
+  margin-inline: auto;
+  padding: var(--cuisine-panel-padding);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.001), rgb(255 255 255 / .05) 45%, rgba(255, 255, 255, 0.021));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / .18);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .35),
+    inset 0 -1px 0 rgb(255 255 255 / .06),
+    0 30px 80px rgb(0 0 0 / .55);
+}
+
+/* Soft diagonal shine across the glass */
+.cuisines__panel { position: relative; }
+
+.cuisines__panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgb(255 255 255 / .12) 0%, rgb(255 255 255 / 0) 32%, rgb(255 255 255 / 0) 68%, rgb(255 255 255 / .06) 100%);
+  pointer-events: none;
+}
+
+.cuisines__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--cuisine-gap);
+}
+
+.cuisine {
+  position: relative;
+  scroll-margin-top: 96px;
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  overflow: clip;
+  background: rgb(0 0 0 / .35);
+  border: 1px solid rgb(255 255 255 / .16);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .22), 0 10px 30px rgb(0 0 0 / .35);
+}
+
+.cuisine > .media { position: absolute; inset: 0; transition: filter .5s ease; }
+
+/* The hover video sits on top of the image and fades in */
+.cuisine__video {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.cuisine:hover .cuisine__video,
+.cuisine:focus-within .cuisine__video { opacity: 1; }
+
+.cuisine:hover > .media,
+.cuisine:focus-within > .media { filter: brightness(1.2) saturate(1.2); }
+
+/* Shading on top of the photo: a soft dark band behind the name, plus darker
+   top and bottom edges. Strength: --cuisine-vignette in SETTINGS [H]. */
+.cuisine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 38% at 50% 50%, rgb(0 0 0 / calc(var(--cuisine-vignette) * .9)), transparent 80%),
+    linear-gradient(rgb(0 0 0 / var(--cuisine-vignette)), transparent 32%, transparent 62%, rgb(0 0 0 / calc(var(--cuisine-vignette) * 1.2)));
+  pointer-events: none;
+}
+
+.cuisine__body {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 12px 16px;
+  text-align: center;
+}
+
+.cuisine__caption {
+  font-family: var(--font-mono);
+  font-size: var(--cuisine-caption-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.cuisine__name {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: var(--cuisine-name-size);
+  line-height: .95;
+  -webkit-text-stroke: .4px var(--white);
+  text-shadow: 0 2px 18px rgb(0 0 0 / .55);
+}
+
+/* The "Learn more" text is wrapped in a span so it can blur with the other text.
+   The underline belongs to that span. */
+.cuisine .learn { text-decoration: none; }
+
+.cuisine .learn > span {
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Whole card is clickable through the Learn more link */
+.cuisine .learn::after { content: ""; position: absolute; inset: 0; }
+
+/* ==========================================================================
+   [L] POP-UP (CSS only)
+   Each pop-up is targeted by its link (#modal-italian, #modal-thai, ...).
+   The page behind it blurs, and the cross in the top right closes it.
+   ========================================================================== */
+body:has(.modal:target) { overflow: hidden; }
+
+/* Closing a pop-up points here. It is fixed and has no size, so the page does not scroll. */
+.modal-none { position: fixed; top: 0; left: 0; width: 0; height: 0; pointer-events: none; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+
+.modal:target { opacity: 1; visibility: visible; }
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / .5);
+  -webkit-backdrop-filter: blur(var(--modal-blur));
+  backdrop-filter: blur(var(--modal-blur));
+  cursor: default;
+}
+
+.modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(var(--modal-max-width), 100%);
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  padding: 52px 44px 44px;
+  background: rgb(16 16 16 / .85);
+  border: 1px solid rgb(255 255 255 / .14);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 30px 80px rgb(0 0 0 / .6);
+  transform: translateY(14px) scale(.98);
+  transition: transform .4s ease;
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+.modal:target .modal__panel { transform: none; }
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 32px;
+  line-height: 1;
+  color: #b5b5b5;
+  transition: color .2s ease;
+}
+
+.modal__close:hover { color: var(--white); }
+
+.modal__title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: var(--modal-title-size);
+  line-height: 1;
+  margin-bottom: 28px;
+  -webkit-text-stroke: .4px var(--white);
+}
+
+.modal__label {
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.modal__text {
+  margin-bottom: 24px;
+  font-size: var(--modal-text-size);
+  line-height: 1.7;
+  color: #d6d6d6;
+}
+
+.modal__text:last-child { margin-bottom: 0; }
+
+/* ---------- Sample dishes slider: 2 images per slide, 3 slides (6 images) ----------
+   Scroll or swipe sideways, or use the arrows. */
+.samples { margin-top: 32px; }
+
+.samples__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.samples__head .modal__label { margin: 0; }
+
+.samples__nav { display: flex; gap: 8px; }
+
+.samples__btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0 0 2px;
+  font-size: 19px;
+  line-height: 1;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / .28);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+
+.samples__btn:hover { background: var(--white); color: var(--black); }
+
+.samples__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.samples__track::-webkit-scrollbar { display: none; }
+
+.samples__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.sample {
+  position: relative;
+  margin: 0;
+  aspect-ratio: var(--sample-image-ratio);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / .14);
+}
+
+.sample .media { position: absolute; inset: 0; }
+
+.sample::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(0 0 0 / .65), transparent 40%);
+  pointer-events: none;
+}
+
+.sample__name {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--sample-name-size);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgb(0 0 0 / .6);
+}
+
+/* ==========================================================================
+   [I] QUOTE (always one line)
+   ========================================================================== */
+.quote {
+  min-height: 70svh;
+  display: grid;
+  place-items: center;
+  padding: 64px var(--section-padding-x);
+  text-align: center;
+  overflow-x: clip;
+}
+
+.quote__text {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: var(--quote-size);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   [J] FOOTER
+   ========================================================================== */
+.footer {
+  background: var(--charcoal);
+  padding: 72px 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The left/right footer padding lives here, so the big word below can run edge to edge */
+.footer__inner {
+  width: 100%;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  padding-inline: var(--footer-padding-x);
+}
+
+.footer__cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+/* Logo that replaced the Support column: centered in its cell */
+.footer__logo {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.footer__logo img {
+  display: block;
+  height: var(--footer-logo-height);
+  width: auto;
+  max-width: 100%;
+}
+
+.footer__heading {
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer__links { display: grid; gap: 9px; }
+
+.footer__links a {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--footer-link-size);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  transition: color .25s ease;
+}
+
+.footer__links a:hover { color: var(--muted); }
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 24px;
+}
+
+.footer__legal { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+
+.footer__legal small,
+.footer__legal a {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer__legal a:hover { color: var(--white); }
+
+.footer__aside { display: grid; gap: 16px; justify-items: end; }
+
+.footer__lang {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer__lang [aria-current="true"] { color: var(--white); }
+
+/* Social icons are images from the img folder (img/social-*.svg). Replace them with your own. */
+.social { display: flex; align-items: center; gap: 18px; }
+
+.social a { display: block; opacity: .85; transition: opacity .25s ease; }
+.social a:hover { opacity: 1; }
+
+.social img {
+  display: block;
+  width: var(--social-icon-size);
+  height: var(--social-icon-size);
+  object-fit: contain;
+}
+
+/* ---------- Giant footer word: edge to edge, lit by the cursor when it is near ----------
+   The word is SVG text stretched to the full width of the page, resting on the
+   bottom edge of the footer. Two copies are stacked:
+   - .mark__base  : same color as the footer background, so it cannot be seen
+   - .mark__light : a lighter, grainy copy that is only visible through a big soft
+                    circle around the cursor, while the cursor is anywhere over
+                    the footer. Letters near the cursor glow (even if the cursor
+                    is not touching them), and the glow fades out smoothly with distance.
+   Color and size of the light are in SETTINGS [J].
+   The cursor position comes from the small script at the bottom of index.html. */
+.mark {
+  --mx: -2000px;
+  --my: -2000px;
+  position: relative;
+  width: 100%;
+  margin: 40px 0 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: 0;
+  cursor: default;
+  user-select: none;
+}
+
+.mark__layer {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.mark__layer text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.mark__base text  { fill: var(--mark-base-color); }
+.mark__light text { fill: var(--mark-lit-color); }
+
+.mark__light {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(circle var(--mark-light-radius) at var(--mx) var(--my), rgb(0 0 0 / .95) 0%, rgb(0 0 0 / .6) 32%, rgb(0 0 0 / .22) 64%, transparent 100%);
+  mask-image: radial-gradient(circle var(--mark-light-radius) at var(--mx) var(--my), rgb(0 0 0 / .95) 0%, rgb(0 0 0 / .6) 32%, rgb(0 0 0 / .22) 64%, transparent 100%);
+  transition: opacity .25s ease;
+}
+
+/* Nothing lights up until the cursor is over the footer */
+.footer:hover .mark__light { opacity: 1; }
+
+/* ==========================================================================
+   SCROLL EFFECTS (CSS only)
+   Elements with .reveal blur in as they scroll into view.
+   Works in current Chrome, Edge and Safari. Other browsers simply show the
+   content without the blur.
+   ========================================================================== */
+/* NOTE: sections that contain .reveal elements (showcase, cuisines, quote and the
+   cuisine cards themselves) use "overflow: clip", not "overflow: hidden". "hidden"
+   turns the box into its own scroll container, and the scroll blur would then
+   follow that box instead of the page, so nothing inside it would ever blur.
+
+   On the cuisine cards only the TEXT (small caption, name, "Learn more") has the
+   .reveal class. The photos and videos never blur. */
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(16px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+@keyframes blur-out-view {
+  from { opacity: 1; filter: blur(0); }
+  to   { opacity: 0; filter: blur(16px); }
+}
+
+@keyframes blur-out {
+  to { opacity: 0; filter: blur(14px); transform: scale(.97); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* .reveal    : blurs in when it enters and blurs out when it leaves through the top
+       .reveal-in : only blurs in (used for the full-screen video) */
+    .reveal {
+      animation: blur-in linear backwards, blur-out-view linear forwards;
+      animation-timeline: view(), view();
+      animation-range: entry 0% entry 90%, exit 0% exit 100%;
+    }
+
+    .reveal-in {
+      animation: blur-in linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    /* Hero text blurs away as you scroll down to the next section */
+    .hero__content {
+      animation: blur-out linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 75vh;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .domino, .menu-toggle:checked ~ .menu .domino { transition: none; transition-delay: 0s; }
+}
+
+/* ==========================================================================
+   SMALL SCREENS (below 1000px wide: tablets and phones)
+   These values replace the SETTINGS above on small screens.
+   Sizes in vw scale with the screen width (10vw = 10% of the screen width).
+   ========================================================================== */
+@media (max-width: 1000px) {
+  :root {
+    --header-padding-x: 24px;
+    --section-padding-x: 20px;
+    --section-padding-y: 64px;
+    --footer-padding-x: 20px;
+
+    --hero-title-size: 18vw;
+    --showcase-title-size: 13vw;
+    --section-title-size: min(43px, 8vw);
+    --quote-size: 6.2vw;       /* keeps the quote on one line */
+
+    --cuisine-name-size: min(58px, 8vw);
+    --cuisine-panel-padding: 14px;
+    --cuisine-gap: 10px;
+    --cuisine-caption-size: 8px;
+    --modal-title-size: min(56px, 11vw);
+    --mark-light-radius: 220px;
+  }
+}
+
+@media (max-width: 900px) {
+  .featured__grid { grid-template-columns: 1fr; max-width: 520px; }
+  .footer__cols { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .menu { grid-template-columns: 1fr; padding: 28px 24px; }
+  .menu__cards { display: none; }
+  .footer__aside { justify-items: start; }
+  .modal__panel { padding: 48px 24px 28px; }
+}
+
+@media (max-width: 480px) {
+  .footer__cols { grid-template-columns: 1fr; }
+}

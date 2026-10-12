@@ -1,0 +1,388 @@
+/* ==========================================================================
+   DISHCOVERY | EXTRAS (favorites, reviews, stars)
+   Used by restaurants.html, favorites.html and reviews.html.
+   The fonts, colors and base look come from style.css.
+   ========================================================================== */
+
+:root {
+  --fav-title-size: clamp(56px, 9vw, 150px);   /* big cuisine name in the favorites hero */
+  --fav-slide-time: .95s;                      /* speed of the smooth slide */
+  --glass-fill: linear-gradient(135deg, rgb(255 255 255 / .08), rgb(255 255 255 / .02) 55%, rgb(255 255 255 / .04));
+}
+
+/* ---------- Star (favorite) button ---------- */
+.fav {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: var(--white);
+  background: rgb(255 255 255 / .06);
+  border: 1px solid rgb(255 255 255 / .3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .3s cubic-bezier(.2, .7, .2, 1);
+}
+
+.fav svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.4; transition: fill .25s ease; }
+.fav:hover { background: rgb(255 255 255 / .2); transform: scale(1.08); }
+.fav[aria-pressed="true"] { color: var(--black); background: var(--white); border-color: var(--white); }
+.fav[aria-pressed="true"] svg { fill: currentColor; }
+
+/* Star next to the restaurant name in the pop-up: no circle */
+.fav--bare { width: auto; height: auto; padding: 6px; background: none; border: 0; border-radius: 0; flex: none; }
+.fav--bare svg { width: 28px; height: 28px; stroke-width: 1.5; }
+.fav--bare:hover { background: none; transform: scale(1.12); }
+.fav--bare[aria-pressed="true"] { color: var(--white); background: none; }
+
+/* ---------- Restaurant card: whole card opens the pop-up, star sits on top ---------- */
+.rcard__link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.rcard__link:focus-visible { outline-offset: -4px; }
+.rcard:has(.rcard__link:hover),
+.rcard:has(.rcard__link:focus-visible) { transform: translateY(-4px); border-color: rgb(255 255 255 / .32); }
+.rcard:has(.rcard__link:hover)::before,
+.rcard:has(.rcard__link:focus-visible)::before { opacity: 1; }
+.rcard:has(.rcard__link:hover) .rcard__arrow,
+.rcard:has(.rcard__link:focus-visible) .rcard__arrow { transform: translateX(4px); background: var(--white); color: var(--black); }
+
+/* Photo at the top of each restaurant card (runs edge to edge inside the card) */
+.rcard__photo {
+  flex: none;
+  aspect-ratio: 16 / 9;
+  margin: calc(-1 * var(--list-card-padding)) calc(-1 * var(--list-card-padding)) 6px;
+}
+.rcard__photo::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(transparent, rgb(8 8 8 / .85));
+  pointer-events: none;
+}
+.rcard__photo img { transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.rcard:has(.rcard__link:hover) .rcard__photo img { transform: scale(1.05); }
+
+/* Card arrow: a chevron, centered in its circle */
+.rcard__arrow { display: grid; place-items: center; padding: 0; }
+.rcard__arrow svg { display: block; width: 14px; height: 14px; }
+
+/* ---------- Message at the bottom ("Added to favorites") ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 22px;
+  font-size: 14px;
+  background: rgb(18 18 18 / .8);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / .18);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .2), 0 20px 50px rgb(0 0 0 / .5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 12px);
+  transition: opacity .35s ease, transform .45s cubic-bezier(.2, .7, .2, 1), visibility .35s ease;
+}
+
+.toast.is-on { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.toast a { font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- Stars (shown and picked) ---------- */
+.rstars { display: inline-flex; gap: 3px; font-size: 17px; line-height: 1; letter-spacing: 0; color: var(--white); }
+.rstars i { font-style: normal; color: #4a4a4a; }
+
+.starpick { display: inline-flex; gap: 4px; }
+.starpick button {
+  padding: 0 2px;
+  font-size: 30px;
+  line-height: 1;
+  color: #4a4a4a;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color .2s ease, transform .2s ease;
+}
+.starpick button.on { color: var(--white); }
+.starpick button:hover { transform: scale(1.15); }
+
+.field {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--white);
+  background: rgb(255 255 255 / .05);
+  border: 1px solid rgb(255 255 255 / .18);
+  border-radius: 12px;
+  outline: 0;
+  resize: vertical;
+  transition: border-color .25s ease;
+}
+.field:focus { border-color: rgb(255 255 255 / .6); }
+.field::placeholder { color: rgb(255 255 255 / .4); }
+
+/* ---------- Review form inside the restaurant pop-up ---------- */
+.rv { display: grid; gap: 14px; margin-bottom: 4px; }
+.rv__row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.rv__row .btn { margin: 0; }
+.rv__msg { font-size: 14px; color: #d6d6d6; }
+.rv__msg a { text-decoration: underline; text-underline-offset: 4px; }
+.rv__msg[hidden], .rv .linkbtn[hidden] { display: none; }
+
+/* ---------- Glass panel (plain, like the cuisines panel on the home page) ---------- */
+.glass {
+  position: relative;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgb(255 255 255 / .18);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), inset 0 -1px 0 rgb(255 255 255 / .06), 0 30px 80px rgb(0 0 0 / .55);
+}
+
+/* ==========================================================================
+   FAVORITES PAGE: hero slider
+   ========================================================================== */
+.fav-hero {
+  position: relative;
+  isolation: isolate;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.fav-track {
+  display: flex;
+  height: 100%;
+  transition: transform var(--fav-slide-time) cubic-bezier(.65, 0, .2, 1);
+}
+
+.fav-slide { position: relative; flex: 0 0 100%; height: 100%; }
+.fav-slide > .media { position: absolute; inset: 0; }
+
+/* dark shade so the white text always reads */
+.fav-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(0 0 0 / .72), rgb(0 0 0 / .1) 65%), linear-gradient(rgb(0 0 0 / .45), transparent 30%);
+}
+
+.fav-copy {
+  position: absolute;
+  left: var(--header-padding-x);
+  bottom: 22vh;
+  z-index: 2;
+  max-width: calc(100% - 2 * var(--header-padding-x));
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .8s ease, transform .9s cubic-bezier(.2, .7, .2, 1);
+}
+
+.fav-slide.is-active .fav-copy { opacity: 1; transform: none; transition-delay: .45s; }
+
+.fav-copy h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fav-title-size);
+  line-height: .9;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.fav-copy p {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: var(--hero-tagline-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* fades into the black page below */
+.fav-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  z-index: 3;
+  background: linear-gradient(transparent, var(--black));
+  pointer-events: none;
+}
+
+.fav-ctrl {
+  position: absolute;
+  inset: auto var(--header-padding-x) 40px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.fav-arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--white);
+  background: rgb(0 0 0 / .25);
+  border: 1px solid rgb(255 255 255 / .35);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease;
+}
+
+.fav-arrow:hover { background: var(--white); color: var(--black); }
+.fav-arrow--next { justify-self: end; }
+
+.fav-dots { display: flex; gap: 10px; }
+.fav-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  background: rgb(255 255 255 / .35);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .3s ease, transform .3s ease;
+}
+.fav-dot.is-on { background: var(--white); transform: scale(1.3); }
+
+.fav-list { padding-top: 24px; }
+.fav-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: var(--section-title-gap); }
+.fav-head .section__title { margin: 0; }
+
+/* ==========================================================================
+   MY REVIEWS PAGE
+   ========================================================================== */
+.rv-page {
+  max-width: 1100px;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 150px var(--section-padding-x) var(--section-padding-y);
+}
+
+.rv-title {
+  margin-bottom: 40px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 84px);
+  line-height: .95;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+/* plain, quiet glass */
+.rv-panel {
+  padding: 0 40px;
+  background: linear-gradient(rgb(255 255 255 / .05), rgb(255 255 255 / .015));
+  border-color: rgb(255 255 255 / .1);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .12);
+}
+
+.rv-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 32px;
+  padding: 32px 0;
+}
+
+/* the line between reviews: inside the glass, so it keeps a margin from the edges */
+/* Faded photo of the restaurant's cuisine, on the right side of its review.
+   It fades out toward the left so the text stays easy to read. */
+.rv-panel { overflow: hidden; }
+.rv-row { position: relative; isolation: isolate; }
+
+.rv-row__photo {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: -40px;                 /* runs to the edge of the glass (same as the panel padding) */
+  width: 46%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .8;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 80%);
+  mask-image: linear-gradient(to right, transparent, #000 80%);
+}
+
+.rv-row + .rv-row { border-top: 1px solid rgb(255 255 255 / .16); }
+
+.rv-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.06;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+a.rv-name:hover { color: var(--muted); }
+
+.rv-meta { margin-top: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.rv-text { margin: 12px 0 14px; font-size: 16px; line-height: 1.7; color: #d6d6d6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.rv-date { font-size: 12px; color: var(--muted); }
+.rv-actions { display: flex; gap: 22px; margin-top: 14px; }
+.rv-edit { display: grid; gap: 14px; }
+.rv-edit .rv__row { justify-content: flex-start; }
+.rv-edit .btn { margin: 0; }
+.rv-empty { padding: 72px 0; text-align: center; }
+.rv-empty .btn { margin-top: 12px; }
+
+@media (max-width: 900px) {
+  .rv-page { padding-top: 120px; }
+  .rv-panel { padding: 0 22px; }
+  .rv-row__photo { right: -22px; width: 70%; opacity: .35; }
+  .rv-row { grid-template-columns: 1fr; gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fav-track, .fav-copy { transition-duration: .01s; transition-delay: 0s; }
+}
+
+/* ==========================================================================
+   SMOOTH POP-UPS (fixes the late, jumpy blur)
+   Before, the whole pop-up faded with opacity. A parent that is fading stops
+   its child's blur from seeing the page behind it, so the blur only "popped"
+   in at the end. Now the pop-up itself never fades: only the dark/blurred
+   backdrop and the panel fade, each on their own, so the blur eases in with them.
+   Applies to every pop-up (restaurants and the cuisine cards).
+   ========================================================================== */
+.modal,
+.modal:target { opacity: 1; }
+
+.modal { transition: visibility 0s linear .45s; }
+.modal:target { transition-delay: 0s; }
+
+.modal__backdrop {
+  opacity: 0;
+  transition: opacity .45s ease;
+  will-change: opacity;
+}
+.modal:target .modal__backdrop { opacity: 1; }
+
+.modal__panel {
+  opacity: 0;
+  transform: translateY(14px) scale(.98);
+  transition: opacity .4s ease, transform .5s cubic-bezier(.2, .7, .2, 1);
+  will-change: opacity, transform;
+}
+.modal:target .modal__panel { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .modal, .modal__backdrop, .modal__panel { transition-duration: .01s; }
+}

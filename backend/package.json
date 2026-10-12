@@ -1,0 +1,27 @@
+{
+  "name": "dishcovery-backend",
+  "version": "1.0.0",
+  "description": "Express + MongoDB (Mongoose) API for the Dishcovery frontend",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node scripts/seed.js",
+    "seed:overwrite": "node scripts/seed.js --overwrite",
+    "test": "node tests/smoke.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bson": "^7.3.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

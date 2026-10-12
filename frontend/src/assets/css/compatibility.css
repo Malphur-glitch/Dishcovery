@@ -1,0 +1,7 @@
+/* The original absent social images reserve 20px square slots.
+   Keep their original blank layout without adding icons or missing image requests. */
+.social-slot {
+  display: block;
+  width: var(--social-icon-size);
+  height: var(--social-icon-size);
+}

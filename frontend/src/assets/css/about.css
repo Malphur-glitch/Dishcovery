@@ -1,0 +1,545 @@
+/* ==========================================================================
+   DISHCOVERY | ABOUT PAGE
+   Loaded after style.css, so the fonts, colors, header, menu, buttons,
+   .reveal blur and footer all come from there. This file only adds what
+   the About page needs.
+
+   Everything you will probably want to resize is in the SETTINGS block.
+   All sizes are in px (or vw / svh where the page should scale).
+   ========================================================================== */
+
+:root {
+
+  /* [A1] HERO ("Discover Dishcovery") */
+  --about-title-size: 150px;        /* script title */
+
+  /* [A2] SCROLLING PHRASE ("Life is too short to keep asking") */
+  --marquee-size: 230px;            /* font size of the big phrase */
+  --marquee-height: 80svh;          /* height of this section */
+  --marquee-time: 38s;              /* time for one full loop (bigger = slower). It runs on its own, not with the scroll */
+  --marquee-gap: 6vw;               /* space between the repeats of the phrase */
+  --marquee-fade: 14%;              /* how much of each screen edge the phrase fades into */
+
+  /* [A3] STORY TEXT + TEAM PHOTO */
+  --story-text-size: 19px;          /* font size of the paragraph */
+  --story-text-width: 520px;        /* width of the paragraph */
+  --team-photo-width: 58vw;         /* width of the group photo placeholder */
+  --team-photo-ratio: 3 / 2;        /* shape of the group photo */
+  --team-photo-drift: 7%;           /* how much the photo moves inside its frame while scrolling (keep it small) */
+
+  /* [A4] FLOATING LOGO (overlaps the group photo)
+         Resize it here. Width and ratio are all you need. */
+  --float-logo-width: 36vw;         /* BIGGER NUMBER = BIGGER LOGO (the background is transparent, so it just floats) */
+  --float-logo-ratio: 16 / 10;      /* shape of the logo's box (match your PNG) */
+  --float-logo-padding: 0%;         /* empty space around the logo inside its box */
+  --float-logo-start: 8vh;          /* where it starts: this far BELOW its place (not touching the photo yet) */
+  --float-logo-end: 34vh;           /* how far ABOVE its place it ends, so it slides up over the photo as you scroll. Bigger = more overlap */
+  --float-logo-offset-x: 12vw;      /* distance from the left edge */
+
+  /* [A5] MISSION */
+  --mission-title-size: 22px;
+  --mission-text-size: 15px;
+  --mission-width: 480px;
+  --mission-video-width: 66vw;
+  --mission-video-ratio: 16 / 9;
+
+  /* [A6] TEAM MEMBERS (4 rows, alternating left / right) */
+  --member-scale: 0.9;                /* RESIZE THE WHOLE MEMBER (photo + signature + name + role) with this one number. 1 = normal, .8 = smaller, 1.2 = bigger */
+  --member-width: calc(42vw * var(--member-scale));   /* width of one whole block (photo + text) */
+  --member-edge: 8vw;               /* distance from the screen edge. Rows 1 and 3 sit on the RIGHT, rows 2 and 4 on the LEFT */
+  --member-fade-start: 55%;         /* where the photo starts to fade (smaller = longer fade, 80% = only the last bit fades) */
+  --member-fade-curve: 155%;        /* how curved the fade is: 100% = gently curved, 70% = more curved (but the photo's far corners start to fade too), 300% = nearly straight */
+  --member-photo-height: 250px;      /* HEIGHT of the member photo. auto = follows the shape below. Or set a number, e.g. 320px (taller) or 220px (shorter). The width does not change */
+  --member-photo-ratio: 3 / 2;      /* shape of the member photo (smaller second number = taller photo) */
+  --member-photo-start: 6vh;        /* photo starts this far below its place */
+  --member-photo-end: 26vh;         /* ...and ends this far above it (it climbs over the video / row above) */
+  --member-text-extra: 20vh;        /* HOW MUCH MORE the signature + name + role move than the photo. 0 = same as the photo, bigger = they move more */
+  --member-card-start: calc(var(--member-photo-start) + var(--member-text-extra) * .44);   /* (worked out from the line above) */
+  --member-card-end: calc(var(--member-photo-end) + var(--member-text-extra) * .56);       /* .44 / .56 = the NAME is level with the photo middle exactly when the photo is mid-screen, then pulls ahead */
+  --member-text-gap: 4vw;           /* space between the photo and the name. Used by BOTH sides (left and right rows), so they always match. Bigger = name further from the photo */
+  --member-card-drop: calc(3vw * var(--member-scale));          /* how far the text block sits below the top of the photo */
+    --member-gap: 5vh;              /* vertical space between members (bigger = more space) */
+  --member-pull: 0vh;               /* 0 = rows only touch the video; raise it to make each row climb back over the one above */
+  --sig-slot: calc(64px * var(--member-scale));                 /* room reserved for the signature. The NAME sits under this, so it never moves when you resize a signature */
+  --sig-height: calc(64px * var(--member-scale));               /* size of the signature picture itself (resize freely; it can be bigger than the slot) */
+  --sig-overlap: calc(14px * var(--member-scale));              /* how far the signature dips down onto the name. 0 = not touching, bigger = more overlap */
+  --member-name-size: calc(26px * var(--member-scale));
+  --member-role-size: calc(11px * var(--member-scale));
+
+  /* [A7] CLOSING LOGO (plain black screen) */
+  --outro-logo-height: 180px;
+  --header-hide-time: 1s;           /* how long the top bar takes to hide / return (bigger = slower) */
+}
+
+/* ======================================================================
+   SIGNATURE SETTINGS: each member's signature separately
+     --sig-height : size of that signature (its width follows)
+     --sig-x      : move sideways.  + = right,  - = left
+     --sig-y      : move up / down. + = down,   - = up
+   The name and role never move when you change these.
+   (Row 1 = first member, row 2 = second ... same order as the page.)
+ ====================================================================== */
+.member:nth-of-type(1) .member__sig { --sig-height: 150px; --sig-x: 30px; --sig-y: +40px; }
+.member:nth-of-type(2) .member__sig { --sig-height: 64px; --sig-x: 0px; --sig-y: 0px; }
+.member:nth-of-type(3) .member__sig { --sig-height: 64px; --sig-x: 0px; --sig-y: 0px; }
+.member:nth-of-type(4) .member__sig { --sig-height: 64px; --sig-x: 0px; --sig-y: 0px; }
+
+
+/* ==========================================================================
+   SHARED PLACEHOLDER HELPERS
+   ========================================================================== */
+.about-page main { overflow-x: clip; }
+
+/* ==========================================================================
+   [A1] HERO: video placeholder that fades into black as you scroll
+   ========================================================================== */
+.about-hero .hero__title { font-size: var(--about-title-size); }
+
+.about-hero .hero__sub {
+  max-width: 440px;
+  margin: 18px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e6e6e6;
+}
+
+@keyframes media-to-black {
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .about-hero > .media {
+      animation: media-to-black linear both;
+      animation-timeline: scroll(root);
+      animation-range: 12vh 100vh;
+    }
+  }
+}
+
+/* ==========================================================================
+   [A2] SCROLLING PHRASE (loops on its own, NOT tied to the mouse wheel)
+   Two copies of the phrase sit side by side and slide left forever, so there is never a gap.
+   ========================================================================== */
+.marquee {
+  height: var(--marquee-height);
+  display: grid;
+  align-items: center;
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--marquee-fade), #000 calc(100% - var(--marquee-fade)), transparent 100%);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+}
+
+.marquee__text {
+  flex: none;
+  padding-right: var(--marquee-gap);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--marquee-size);
+  line-height: 1;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #ececec;
+}
+
+@keyframes marquee-loop {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee__track { animation: marquee-loop var(--marquee-time) linear infinite; }
+}
+
+/* ==========================================================================
+   [A3] STORY TEXT + GROUP PHOTO
+   ========================================================================== */
+.story {
+  position: relative;
+  padding: 0 0 0;
+}
+
+.story__text {
+  width: min(var(--story-text-width), calc(100% - 2 * var(--section-padding-x)));
+  margin-left: max(var(--section-padding-x), 24vw);
+  padding-bottom: 14vh;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--story-text-size);
+  line-height: 1.55;
+  color: #f2f2f2;
+}
+
+.story__text strong { font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Group photo placeholder (no blur: it moves instead) */
+.team-photo {
+  position: relative;
+  z-index: 1;
+  width: var(--team-photo-width);
+  aspect-ratio: var(--team-photo-ratio);
+  margin: 0 0 0 auto;
+  margin-right: 0;
+  border-radius: 2px;
+}
+
+.team-photo.media { --h: 215; }
+
+/* The picture sits in a taller layer that drifts slowly inside the frame */
+.drift {
+  position: absolute;
+  inset: calc(-1 * var(--team-photo-drift)) 0;
+  background:
+    radial-gradient(70% 55% at 70% 25%, hsl(var(--h) 45% 30% / .55), transparent 70%),
+    linear-gradient(165deg, hsl(var(--h) 28% 20%), hsl(var(--h) 30% 7%));
+}
+
+@keyframes drift {
+  from { transform: translateY(calc(-1 * var(--team-photo-drift) * .9)); }
+  to   { transform: translateY(calc(var(--team-photo-drift) * .9)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .drift {
+      animation: drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+/* ==========================================================================
+   [A4] FLOATING LOGO (overlaps the group photo, moves faster than the scroll)
+   ========================================================================== */
+.floater-zone {
+  position: relative;
+  z-index: 2;
+  height: calc(var(--float-logo-width) / (16 / 10) + 14vh);   /* grows with the logo */
+  margin-top: 0;                    /* starts right under the photo, NOT overlapping */
+  pointer-events: none;
+}
+
+.float-logo {
+  position: absolute;
+  top: 0;
+  left: var(--float-logo-offset-x);
+  width: var(--float-logo-width);
+  aspect-ratio: var(--float-logo-ratio);
+  margin: 0;
+  background: none;              /* transparent: no box behind the logo */
+  pointer-events: auto;
+}
+
+.float-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: var(--float-logo-padding);
+  object-fit: contain;
+  filter: drop-shadow(0 18px 40px rgb(0 0 0 / .55));
+}
+
+@keyframes float-fast {
+  from { transform: translateY(var(--float-logo-start)); }
+  to   { transform: translateY(calc(-1 * var(--float-logo-end))); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .float-logo {
+      animation: float-fast linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+/* ==========================================================================
+   [A5] MISSION + VIDEO
+   ========================================================================== */
+.mission {
+  padding: 4vh var(--section-padding-x) 0;
+}
+
+.mission__copy {
+  width: min(var(--mission-width), 100%);
+  margin-left: max(0px, calc(var(--float-logo-offset-x) + 0px));
+}
+
+.mission__title {
+  margin-bottom: 18px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--mission-title-size);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.mission__text {
+  font-size: var(--mission-text-size);
+  line-height: 1.7;
+  color: #e6e6e6;
+}
+
+.mission__video {
+  width: var(--mission-video-width);
+  aspect-ratio: var(--mission-video-ratio);
+  margin: 64px 0 0 max(0px, var(--float-logo-offset-x));
+  border-radius: 2px;
+}
+
+.mission__video.media { --h: 200; }
+
+/* ==========================================================================
+   [A6] TEAM MEMBERS (photo fades toward the signature card, alternates sides)
+   ========================================================================== */
+.team {
+  padding: 6vh 0 10vh;
+  display: grid;
+  gap: var(--member-gap);
+}
+
+.member {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  width: min(var(--member-width), 100%);
+  margin-left: auto;                       /* rows 1 and 3: on the right */
+  margin-right: var(--member-edge);
+}
+
+.member + .member { margin-top: calc(-1 * var(--member-pull)); }
+
+.member--photo-right {                      /* rows 2 and 4: on the left */
+  margin-left: var(--member-edge);
+  margin-right: auto;
+}
+
+.member__photo {
+  margin: 0;                            /* <figure> has a default 40px side margin that pushed the photos toward / away from the names */
+  grid-row: 1;
+  grid-column: 1 / 8;
+  aspect-ratio: var(--member-photo-ratio);
+  width: 100%;                          /* keeps the width the same when you change the height */
+  height: var(--member-photo-height);   /* when this is not auto, it overrides the shape */
+  border-radius: 2px;
+  /* Smooth fade toward the text side. Where it starts: --member-fade-start (bigger = fade is shorter) */
+  -webkit-mask-image: radial-gradient(ellipse 100% var(--member-fade-curve) at 0% 50%, #000 0, #000 var(--member-fade-start), rgb(0 0 0 / .8) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.3), rgb(0 0 0 / .45) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.55), rgb(0 0 0 / .15) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.8), transparent 100%);
+  mask-image: radial-gradient(ellipse 100% var(--member-fade-curve) at 0% 50%, #000 0, #000 var(--member-fade-start), rgb(0 0 0 / .8) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.3), rgb(0 0 0 / .45) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.55), rgb(0 0 0 / .15) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.8), transparent 100%);
+}
+
+/* Safety crop: hides a thin light strip that some photo files have on their edge (e.g. ken.jpeg on the right).
+   The picture is made 6px wider on each side and the frame clips the extra. Raise 6px if a line is still visible. */
+.member__photo .drift img {
+  inset: 0 -6px;
+  width: calc(100% + 12px);
+  max-width: none;
+}
+
+/* Transparent: no box, no background. The signature and the text float straight on the page
+   (or on top of the video behind them). */
+.member__card {
+  grid-row: 1;
+  grid-column: 7 / 13;
+  z-index: 2;
+  display: grid;
+  gap: 14px;
+  align-content: center;
+  margin-top: var(--member-card-drop);
+  padding: 0 0 0 var(--member-text-gap);
+  text-shadow: 0 2px 22px rgb(0 0 0 / .75);
+}
+
+/* Signature: save a transparent PNG as img/signature-1.png ... signature-4.png.
+   If your signature is dark ink, add:  filter: invert(1);  to .member__sig */
+.member__sig {
+  position: relative;
+  z-index: 1;                       /* the signature sits on top of the name */
+  height: var(--sig-slot);          /* fixed, so the name never moves */
+  pointer-events: none;
+}
+
+/* Shown only while the signature file is missing */
+.member__sig.is-empty::before {
+  content: "Signature";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(var(--sig-slot) * .6);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+/* The picture keeps its own shape (width follows the height), sits on the bottom of its slot and
+   hangs down over the name by --sig-overlap. To resize ONE person's signature only, add
+   style="--sig-height:48px" to that member's <div class="member__sig"> in about.html. */
+.member__sig img {
+  position: absolute;
+  left: 0;
+  bottom: calc(-1 * var(--sig-overlap));
+  transform: translate(var(--sig-x, 0px), var(--sig-y, 0px));   /* per-signature move: see SIGNATURE SETTINGS below */
+  height: var(--sig-height);
+  width: auto;
+  max-width: none;
+}
+
+.member__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--member-name-size);
+  line-height: 1;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.member__role {
+  font-family: var(--font-mono);
+  font-size: var(--member-role-size);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+
+/* ==========================================================================
+   NAME CENTRED ON THE PHOTO (desktop)
+   The card is as tall as the photo and split in three rows: signature (top, sits on the name),
+   NAME (always the exact middle row), role (bottom, sits under the name). So the NAME is level
+   with the middle of the photo, whatever the signature size or name length (1 or 2 lines).
+   Both the photo and the card use the same scroll animation start/end point (see --member-card-*),
+   so they line up when the photo is mid-screen and the text then moves ahead of the photo.
+   ========================================================================== */
+@media (min-width: 1001px) {
+  .member__card {
+    align-self: stretch;
+    margin-top: 0;
+    grid-template-rows: 1fr auto 1fr;
+    align-content: stretch;
+    row-gap: 14px;
+    gap: 14px;
+    min-width: 0;
+  }
+  .member__card .member__sig  { grid-row: 1; align-self: end; }
+  .member__card .member__name { grid-row: 2; align-self: center; white-space: nowrap; }
+  .member__card .member__role { grid-row: 3; align-self: start; }
+}
+
+/* Right-hand rows: photo on the right (fading left), card on the left */
+.member--photo-right .member__photo {
+  grid-column: 6 / 13;
+  -webkit-mask-image: radial-gradient(ellipse 100% var(--member-fade-curve) at 100% 50%, #000 0, #000 var(--member-fade-start), rgb(0 0 0 / .8) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.3), rgb(0 0 0 / .45) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.55), rgb(0 0 0 / .15) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.8), transparent 100%);
+  mask-image: radial-gradient(ellipse 100% var(--member-fade-curve) at 100% 50%, #000 0, #000 var(--member-fade-start), rgb(0 0 0 / .8) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.3), rgb(0 0 0 / .45) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.55), rgb(0 0 0 / .15) calc(var(--member-fade-start) + (100% - var(--member-fade-start)) * 0.8), transparent 100%);
+}
+
+.member--photo-right .member__card { grid-column: 1 / 7; padding: 0 var(--member-text-gap) 0 0; justify-items: end; text-align: right; }
+.member--photo-right .member__sig img { left: auto; right: 0; }
+.member--photo-right .member__sig.is-empty::before { justify-content: end; }
+
+@keyframes member-photo-float {
+  from { transform: translateY(var(--member-photo-start)); }
+  to   { transform: translateY(calc(-1 * var(--member-photo-end))); }
+}
+
+@keyframes member-card-float {
+  from { transform: translateY(var(--member-card-start)); }
+  to   { transform: translateY(calc(-1 * var(--member-card-end))); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .member__photo {
+      animation: member-photo-float linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    .member__card {
+      animation: member-card-float linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+/* ==========================================================================
+   [A7] CLOSING SCREEN (plain black, logo only)
+   ========================================================================== */
+.outro {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: var(--black);
+  overflow-x: clip;
+}
+
+.outro img {
+  display: block;
+  height: var(--outro-logo-height);
+  width: auto;
+  max-width: 80vw;
+}
+
+/* ==========================================================================
+   SMALL SCREENS
+   ========================================================================== */
+@media (max-width: 1000px) {
+  :root {
+    --about-title-size: 15vw;
+    --marquee-size: 38vw;
+    --story-text-size: 17px;
+    --team-photo-width: 100vw;
+    --float-logo-width: 64vw;
+    --float-logo-offset-x: 8vw;
+    --float-logo-overlap: 22vw;
+    --float-logo-start: 5vh;
+    --float-logo-end: 20vh;
+    --mission-video-width: 100%;
+    --member-photo-start: 2vh;
+    --member-photo-end: 6vh;
+    --member-card-start: 4vh;
+    --member-card-end: 12vh;
+    --member-card-drop: 30vw;
+    --member-name-size: 26px;
+    --sig-slot: 84px;
+    --sig-height: 84px;
+    --outro-logo-height: 120px;
+  }
+
+  .story__text { margin-left: var(--section-padding-x); }
+  .mission__copy, .mission__video { margin-left: 0; }
+
+  .member, .member--photo-right { margin-inline: var(--section-padding-x); width: auto; }
+
+  .member__photo,
+  .member--photo-right .member__photo { grid-column: 1 / 13; }
+
+  .member__card,
+  .member--photo-right .member__card { grid-column: 3 / 13; padding: 0 0 0 4vw; }
+
+  .member--photo-right .member__card { grid-column: 1 / 11; padding: 0 4vw 0 0; }
+}
+
+/* ==========================================================================
+   HEADER HIDE: the top bar slides away at the closing logo (through the footer)
+   and comes back as soon as you scroll up above it. Switched by about.js.
+   ========================================================================== */
+.topbar {
+  transition: transform var(--header-hide-time) cubic-bezier(.45, 0, .2, 1), opacity var(--header-hide-time) ease;
+}
+
+.topbar.is-hidden {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+}
