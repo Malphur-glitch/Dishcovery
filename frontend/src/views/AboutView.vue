@@ -21,7 +21,7 @@ const hideImage = event => { event.target.style.visibility = 'hidden'; };
       <div class="hero__content">
         <h1 class="hero__title">The Scoop</h1><!-- EDIT: headline (size: about.css [A1]) -->
         <p class="hero__tagline">Every craving leads to a discovery.</p><!-- EDIT -->
-        <p class="hero__sub">Here in Dishcovery, You start your jJurney</p><!-- EDIT -->
+        <p class="hero__sub">Here in Dishcovery, You start your journey</p><!-- EDIT -->
       </div>
     </section>
 
