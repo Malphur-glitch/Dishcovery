@@ -1,7 +1,3 @@
-// End-to-end check of the running API (start the server first, with the database seeded):
-//   npm test
-// It creates one temporary restaurant for the write tests and deletes it again at the end,
-// so the imported dataset is never modified.
 const API = (process.env.API_URL || 'http://localhost:3000/api').replace(/\/$/, '');
 const ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
