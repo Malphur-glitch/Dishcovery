@@ -21,7 +21,6 @@ const gradeSchema = new Schema(
   { _id: false }
 );
 
-// Field names are kept exactly as they are in the supplied dataset (note the capital "Meals").
 const restaurantSchema = new Schema(
   {
     address: { type: addressSchema },
