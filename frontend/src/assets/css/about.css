@@ -1,12 +1,3 @@
-/* ==========================================================================
-   DISHCOVERY | ABOUT PAGE
-   Loaded after style.css, so the fonts, colors, header, menu, buttons,
-   .reveal blur and footer all come from there. This file only adds what
-   the About page needs.
-
-   Everything you will probably want to resize is in the SETTINGS block.
-   All sizes are in px (or vw / svh where the page should scale).
-   ========================================================================== */
 
 :root {
 
