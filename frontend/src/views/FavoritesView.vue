@@ -1,7 +1,5 @@
 <script setup>
-/* DISHCOVERY | FAVORITES PAGE
-   1. Hero slider: one image per cuisine (6), arrows / dots / swipe-free smooth slide.
-   2. "My Favorites" cards, drawn the same way as the Restaurants page. */
+   
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { getRestaurants, getFavorites, removeFavorite } from '../api.js';
 import RestaurantListCard from '../components/RestaurantListCard.vue';
@@ -22,9 +20,9 @@ async function load() {
  catch(e) { if (alive && token === generation) error.value = e.message; }
  finally { if (alive && token === generation) loading.value = false; }
 }
-// A card opens the pop-up right here on Favorites (it does not go to the Restaurants page).
+// A card opens the pop-up right here on Favorites (it doesnt go to the Restaurants page).
 function open(r) { selected.value = r; openKey.value++; }
-// Un-starring a card removes it from this page, retaining the saved newest-first order.
+
 async function remove(r) {
  if (pending.has(r.id)) return; pending.add(r.id);
  try { const ids = await removeFavorite(r.id); if (alive) { favorites.value = ids; error.value = ''; } }
