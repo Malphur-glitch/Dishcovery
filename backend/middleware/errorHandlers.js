@@ -1,9 +1,7 @@
-// Every failure leaves the API as { error: { message } } with a suitable HTTP status.
 const notFound = (req, res) => {
   res.status(404).json({ error: { message: `Route not found: ${req.method} ${req.originalUrl}` } });
 };
 
-// eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
   let status = err.status || err.statusCode || 500;
   let message = err.message;
