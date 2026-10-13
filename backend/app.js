@@ -13,8 +13,6 @@ function createApp() {
   app.set('trust proxy', 1);
   app.disable('x-powered-by');
 
-  // CORS: only the frontend's exact origin(s). "credentials" lets the browser send/receive the
-  // anonymous-id cookie (the frontend must use credentials: 'include' for that to work).
   const origins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
     .split(',')
     .map((o) => o.trim().replace(/\/$/, ''))
