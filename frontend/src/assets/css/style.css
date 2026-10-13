@@ -1,16 +1,3 @@
-/* ==========================================================================
-   DISHCOVERY HOMEPAGE STYLES
-
-   HOW TO EDIT
-   - Everything you will probably want to change is in the SETTINGS block
-     right below. All sizes are in px.
-   - Each setting has a tag like [A], [B], [C]... Search for the tag
-     (Ctrl+F) to see where it is used further down in this file.
-   - The sizes in SETTINGS apply on screens wider than 1000px (laptops and
-     desktops). Smaller screens use the automatic sizes in the block called
-     "SMALL SCREENS" near the bottom of this file.
-   ========================================================================== */
-
 :root {
 
   /* ======================================================================
