@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
-// One document per (browser, restaurant). ownerId is the anonymous id stored in the browser's cookie.
 const favoriteSchema = new mongoose.Schema(
   {
     ownerId: { type: String, required: true },
     restaurant_id: { type: String, required: true },
-    createdAt: { type: Date }, // set with $setOnInsert so re-adding never moves a favorite
+    createdAt: { type: Date }, 
   },
   { collection: 'favorites', versionKey: false }
 );
