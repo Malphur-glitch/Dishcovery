@@ -12,7 +12,6 @@ const {
 
 const router = express.Router();
 
-// Reads one optional text query parameter (rejects repeated/object values such as ?name=a&name=b).
 function queryText(query, key) {
   const v = query[key];
   if (v === undefined) return '';
@@ -29,7 +28,6 @@ function queryMinScore(query) {
   return n;
 }
 
-// name/cuisine = case-insensitive partial match; borough = case-insensitive exact match.
 function buildFilter(query) {
   const name = queryText(query, 'name');
   const cuisine = queryText(query, 'cuisine');
@@ -41,37 +39,30 @@ function buildFilter(query) {
   return Object.keys(filter).length ? filter : undefined;
 }
 
-/* GET /api/restaurants            -> every record (dataset order). Optional ?borough= ?name= ?cuisine= filters */
 router.get('/', async (req, res) => {
   ok(res, await listRestaurants(buildFilter(req.query)));
 });
 
-/* GET /api/restaurants/search?name=&cuisine=&borough=  (at least one) */
 router.get('/search', async (req, res) => {
   const filter = buildFilter(req.query);
   if (!filter) throw new HttpError(400, 'Provide at least one of: name, cuisine, borough.');
   ok(res, await listRestaurants(filter));
 });
 
-/* GET /api/restaurants/borough/:boroughName */
 router.get('/borough/:boroughName', async (req, res) => {
   const filter = buildFilter({ borough: req.params.boroughName });
   if (!filter) throw new HttpError(400, 'Borough name is required.');
   ok(res, await listRestaurants(filter));
 });
 
-/* GET /api/restaurants/score-results?minScore=90 -> aggregatedScore strictly greater than minScore */
 router.get('/score-results', async (req, res) => {
   ok(res, await scoreResults(queryMinScore(req.query)));
 });
 
-/* GET /api/restaurants/by-borough?minScore=90 -> the same score results grouped by borough */
 router.get('/by-borough', async (req, res) => {
   ok(res, await groupByBorough(queryMinScore(req.query)));
 });
 
-
-/* GET /api/restaurants/:id */
 router.get('/:id', async (req, res) => {
   const record = await findRestaurant(req.params.id);
   if (!record) throw new HttpError(404, `Restaurant "${req.params.id}" was not found.`);
