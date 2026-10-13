@@ -1,18 +1,3 @@
-/* ==========================================================================
-   DISHCOVERY | WEIGHTED (SMOOTH) SCROLLING FOR THE WHOLE SITE
-   Same feel as the About page: the mouse wheel does not jump the page. Each wheel notch sets
-   a target and the page glides toward it, easing out at the end.
-
-   Tune it with the two numbers below:
-     EASE   0.04 = very heavy and floaty ... 0.2 = light and quick.   (0.085 = same as About)
-     SPEED  how far one wheel notch travels (1 = normal, 1.3 = further).
-
-   It stays out of the way when you are:
-     - scrolling inside a pop-up, the menu, or any list / text box that scrolls by itself
-     - using the sideways wheel (the dish sliders)
-     - zooming (Ctrl + wheel), or have "reduce motion" switched on
-   Touch and keyboard scrolling stay native.
-   ========================================================================== */
 export function initializeSmoothScroll() {
   "use strict";
 
