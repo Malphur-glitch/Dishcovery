@@ -6,7 +6,6 @@ const fail = (errors) => {
   throw new HttpError(400, errors.join(' '));
 };
 
-// Trimmed text with a length range; pushes a readable message and returns null when invalid.
 function cleanText(value, label, max, errors) {
   if (typeof value !== 'string') {
     errors.push(`${label} must be text.`);
@@ -25,7 +24,7 @@ function cleanText(value, label, max, errors) {
 }
 
 function parseDate(value) {
-  if (isPlainObject(value) && value.$date !== undefined) value = value.$date; // dataset style
+  if (isPlainObject(value) && value.$date !== undefined) value = value.$date; 
   if (typeof value === 'string' || typeof value === 'number') {
     const d = new Date(value);
     if (!Number.isNaN(d.getTime())) return d;
@@ -33,11 +32,6 @@ function parseDate(value) {
   return null;
 }
 
-/**
- * Validate a restaurant body. Only known fields are kept; everything else is dropped.
- * create=true  -> name, cuisine and borough are required.
- * create=false -> every field is optional (edit), but at least one must be present.
- */
 function validateRestaurantInput(body, { create }) {
   if (!isPlainObject(body)) fail(['The request body must be a JSON object.']);
   const errors = [];
@@ -126,10 +120,6 @@ function validateRestaurantInput(body, { create }) {
   return out;
 }
 
-/**
- * Validate a review body for PUT /reviews/:id. `restaurant` is the matching restaurant record,
- * used to fill name/cuisine/borough when the client leaves them out.
- */
 function validateReviewInput(body, id, restaurant) {
   if (!isPlainObject(body)) fail(['The request body must be a JSON object.']);
   const errors = [];
