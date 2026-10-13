@@ -1,7 +1,5 @@
 const crypto = require('node:crypto');
 
-// There is no login system, so each browser gets a random anonymous id stored in a cookie.
-// Favorites and reviews are filed under that id, which keeps every browser's records separate.
 const COOKIE_NAME = 'dishcovery_uid';
 const TWO_YEARS_MS = 2 * 365 * 24 * 60 * 60 * 1000;
 const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
