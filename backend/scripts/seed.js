@@ -1,10 +1,3 @@
-// Imports data/restaurants.json into the "restaurants" collection of dbRestaurants.
-//
-//   npm run seed              inserts any restaurant that is missing; existing ones are left untouched
-//   npm run seed:overwrite    also resets existing restaurants to the values in the file
-//   (optional) --file=path/to/other.json   import a different file instead of data/restaurants.json
-//
-// Running it again never creates duplicates: records are matched on the string restaurant_id.
 require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,7 +15,6 @@ const BATCH = 500;
   try {
     await connectDB();
 
-    // EJSON turns {"$date": ...} values into real Date objects.
     const raw = fs.readFileSync(FILE_PATH, 'utf8').replace(/^\uFEFF/, '').trim();
     const all = EJSON.parse(raw);
     if (!Array.isArray(all)) throw new Error('The data file must contain an array.');
@@ -37,18 +29,17 @@ const BATCH = 500;
       const id = String(r.restaurant_id);
       if (seen.has(id)) { duplicates++; continue; }
       seen.add(id);
-      const { _id, ...fields } = r; // never carry an _id over from the file
+      const { _id, ...fields } = r;
       records.push({ ...fields, restaurant_id: id, Meals: Array.isArray(r.Meals) ? r.Meals : [] });
     }
 
     try {
-      await Restaurant.init(); // builds the unique restaurant_id index
+      await Restaurant.init(); 
     } catch (err) {
       throw new Error(`Could not build the unique restaurant_id index (${err.message}). ` +
         'The collection probably already has duplicate restaurant_id values; clear it in Atlas and run the seed again.');
     }
 
-    // ObjectIds are created here in file order, so sorting by _id later reproduces the dataset order.
     const { ObjectId } = mongoose.Types;
     let inserted = 0;
     let matched = 0;
